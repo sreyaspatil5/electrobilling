@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: billing-server:latest
+    container_name: billing-server
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      # MONGODB_URI and other secrets should ideally be passed in your production K8s setup via Secrets.
+      # For local Docker Compose testing, we read them from the local env file.
+    env_file:
+      - ./server/.env.production
+    restart: always
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: billing-client:latest
+    container_name: billing-client
+    ports:
+      - "80:80"
+    # Wait for the backend to be available before starting (optional)
+    depends_on:
+      - backend
+    restart: always

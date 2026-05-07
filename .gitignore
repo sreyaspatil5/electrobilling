@@ -1,0 +1,29 @@
+# ── Dependencies ────────────────────────────────────────────────
+node_modules/
+**/node_modules/
+
+# ── Environment Variables (contains secrets) ─────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Build Output ─────────────────────────────────────────────────
+client/dist/
+
+# ── Logs ─────────────────────────────────────────────────────────
+server/logs/
+*.log
+
+# ── Sensitive Files ───────────────────────────────────────────────
+Access key.txt
+*.key
+*.pem
+
+# ── OS / Editor ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Puppeteer cache ──────────────────────────────────────────────
+.cache/
