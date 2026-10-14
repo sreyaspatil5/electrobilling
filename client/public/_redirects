@@ -1,4 +1,4 @@
-/api/*  http://ec2-13-233-51-235.ap-south-1.compute.amazonaws.com:5000/api/:splat  200!
+/api/*  https://api.billing.vops.digital/api/:splat  200!
 /bill/new  /invoices/new  301!
 /  /index.html  200
 /login  /index.html  200
