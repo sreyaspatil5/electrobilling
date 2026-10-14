@@ -7,7 +7,7 @@ import { Visibility, VisibilityOff, ElectricBolt, LockOutlined } from '@mui/icon
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
@@ -28,7 +28,8 @@ const registerSchema = yup.object({
 const Login = () => {
   const { login, register: registerUser } = useAuth();
   const navigate = useNavigate();
-  const [isRegister, setIsRegister] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [isRegister, setIsRegister] = useState(searchParams.get('mode') === 'register');
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -58,7 +59,7 @@ const Login = () => {
       } else {
         await login(values.email, values.password);
         toast.success('Welcome back!');
-        navigate('/');
+        navigate('/dashboard');
       }
     } catch (err) {
       setError(err.displayMessage || (isRegister ? 'Registration failed.' : 'Login failed. Check credentials.'));
@@ -71,22 +72,24 @@ const Login = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #1e88e5 100%)',
+        backgroundColor: '#f0f5f0',
+        backgroundImage: 'linear-gradient(rgba(40,79,67,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(40,79,67,.035) 1px, transparent 1px)',
+        backgroundSize: '36px 36px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         p: 2,
       }}
     >
-      <Card sx={{ maxWidth: 420, width: '100%', borderRadius: 4, boxShadow: '0 24px 64px rgba(0,0,0,0.25)' }}>
+      <Card sx={{ maxWidth: 440, width: '100%', borderRadius: 1.5, boxShadow: '0 16px 48px rgba(37,61,49,0.13)' }}>
         <CardContent sx={{ p: 4 }}>
           {/* Brand */}
           <Box sx={{ textAlign: 'center', mb: 3 }}>
             <Box
               sx={{
                 width: 64, height: 64, borderRadius: 3,
-                background: 'linear-gradient(135deg, #1565c0, #1e88e5)',
+                background: 'primary.main',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 mx: 'auto', mb: 2,
-                boxShadow: '0 8px 20px rgba(21,101,192,0.35)',
+                boxShadow: '0 8px 20px rgba(40,79,67,0.22)',
               }}
             >
               <ElectricBolt sx={{ color: '#fff', fontSize: 34 }} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   AppBar as MuiAppBar, Toolbar, IconButton, Typography,
-  Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, Chip
+  Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, ButtonBase
 } from '@mui/material';
 import { Menu as MenuIcon, Logout, Person, ElectricBolt } from '@mui/icons-material';
 import { useAuth } from '../../context/AuthContext';
@@ -10,8 +10,8 @@ import { getInitials } from '../../utils/formatters';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const PAGE_TITLES = {
-  '/': 'Dashboard',
-  '/bill/new': 'Create Bill',
+  '/dashboard': 'Dashboard',
+  '/invoices/new': 'Create Bill',
   '/invoices': 'Invoice History',
   '/customers': 'Customers',
   '/products': 'Products',
@@ -19,7 +19,7 @@ const PAGE_TITLES = {
   '/settings': 'Settings',
 };
 
-const TopBar = ({ onMobileMenuOpen }) => {
+const TopBar = ({ mobileOpen, onMobileMenuOpen }) => {
   const { user, logout } = useAuth();
   const { business } = useBusiness();
   const navigate = useNavigate();
@@ -40,6 +40,8 @@ const TopBar = ({ onMobileMenuOpen }) => {
       <Toolbar sx={{ gap: 1 }}>
         <IconButton
           edge="start"
+          aria-label="Open navigation menu"
+          aria-expanded={mobileOpen}
           onClick={onMobileMenuOpen}
           sx={{ display: { md: 'none' }, mr: 1 }}
         >
@@ -58,14 +60,17 @@ const TopBar = ({ onMobileMenuOpen }) => {
         </Box>
 
         {/* User Avatar */}
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', gap: 1, cursor: 'pointer' }}
+        <ButtonBase
+          aria-label="Open account menu"
+          aria-haspopup="menu"
+          aria-expanded={Boolean(anchorEl)}
+          sx={{ display: 'flex', alignItems: 'center', gap: 1, borderRadius: 1, textAlign: 'left' }}
           onClick={(e) => setAnchorEl(e.currentTarget)}
         >
           <Avatar
             sx={{
               width: 36, height: 36,
-              background: 'linear-gradient(135deg, #1565c0 0%, #1e88e5 100%)',
+              backgroundColor: 'primary.main',
               fontSize: '0.8rem', fontWeight: 700,
             }}
           >
@@ -79,7 +84,7 @@ const TopBar = ({ onMobileMenuOpen }) => {
               {user?.role || 'admin'}
             </Typography>
           </Box>
-        </Box>
+        </ButtonBase>
 
         <Menu
           anchorEl={anchorEl}

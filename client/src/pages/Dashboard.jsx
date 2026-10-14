@@ -13,6 +13,7 @@ import api from '../services/api';
 import { formatCurrency, formatDate } from '../utils/formatters';
 import StatCard from '../components/common/StatCard';
 import { useBusiness } from '../context/BusinessContext';
+import toast from 'react-hot-toast';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -26,8 +27,8 @@ const Dashboard = () => {
       try {
         const { data } = await api.get('/invoices/stats');
         setStats(data.data);
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        toast.error(error.displayMessage || 'Could not load dashboard data');
       } finally {
         setLoading(false);
       }
@@ -36,10 +37,10 @@ const Dashboard = () => {
   }, []);
 
   const quickActions = [
-    { label: 'Create Bill', icon: <AddCircle />, path: '/bill/new', color: '#1565c0' },
-    { label: 'Add Customer', icon: <PersonAdd />, path: '/customers', color: '#2e7d32' },
-    { label: 'Add Product', icon: <InventoryOutlined />, path: '/products', color: '#e65100' },
-    { label: 'View Reports', icon: <TrendingUp />, path: '/reports', color: '#6a1b9a' },
+    { label: 'Create Bill', icon: <AddCircle />, path: '/invoices/new', color: '#284f43' },
+    { label: 'Add Customer', icon: <PersonAdd />, path: '/customers', color: '#54798a' },
+    { label: 'Add Product', icon: <InventoryOutlined />, path: '/products', color: '#e56b42' },
+    { label: 'View Reports', icon: <TrendingUp />, path: '/reports', color: '#79917e' },
   ];
 
   const getStatusChip = (status) => {
@@ -61,25 +62,25 @@ const Dashboard = () => {
             title: "Today's Sales",
             value: loading ? '...' : formatCurrency(stats?.daily?.total || 0),
             subtitle: `${stats?.daily?.count || 0} invoice(s) today`,
-            icon: <TrendingUp />, color: '#1565c0',
+            icon: <TrendingUp />, color: '#284f43',
           },
           {
             title: 'Weekly Sales',
             value: loading ? '...' : formatCurrency(stats?.weekly?.total || 0),
             subtitle: `${stats?.weekly?.count || 0} invoice(s) this week`,
-            icon: <Receipt />, color: '#2e7d32',
+            icon: <Receipt />, color: '#54798a',
           },
           {
             title: 'Monthly Sales',
             value: loading ? '...' : formatCurrency(stats?.monthly?.total || 0),
             subtitle: `${stats?.monthly?.count || 0} invoice(s) this month`,
-            icon: <TrendingUp />, color: '#e65100',
+            icon: <TrendingUp />, color: '#e56b42',
           },
           {
             title: 'Total Invoices',
             value: loading ? '...' : (stats?.totalInvoices || 0).toString(),
             subtitle: 'All time',
-            icon: <Receipt />, color: '#6a1b9a',
+            icon: <Receipt />, color: '#79917e',
           },
         ].map((card, i) => (
           <Grid item xs={12} sm={6} lg={3} key={i}>
@@ -102,7 +103,7 @@ const Dashboard = () => {
               <Divider />
               {loading ? (
                 <Box sx={{ p: 2 }}>
-                  {[1, 2, 3].map((k) => <Skeleton key={k} height={50} sx={{ mb: 1 }} />)}
+                  {[1, 2, 3].map((k) => <Skeleton key={k} animation="wave" height={50} sx={{ mb: 1 }} />)}
                 </Box>
               ) : (
                 <Box sx={{ overflowX: 'auto' }}>
@@ -173,8 +174,8 @@ const Dashboard = () => {
                     fullWidth
                     sx={{
                       justifyContent: 'flex-start', py: 1.5, borderRadius: 2,
-                      borderColor: `${color}40`, color: 'text.primary',
-                      '&:hover': { borderColor: color, background: `${color}08` },
+                      borderColor: `${color}50`, color: 'text.primary',
+                      '&:hover': { borderColor: color, background: `${color}0d` },
                     }}
                   >
                     {label}

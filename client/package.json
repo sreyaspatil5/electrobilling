@@ -1,7 +1,7 @@
 {
   "name": "billing-client",
   "version": "1.0.0",
-  "description": "Electrical Parts Billing - Frontend",
+  "description": "Business Billing and Inventory - Frontend",
   "private": true,
   "type": "module",
   "scripts": {

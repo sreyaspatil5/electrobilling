@@ -1,6 +1,6 @@
-# ElectroBill — Electrical Parts Billing App
+# ElectroBill — Business Billing App
 
-A full-stack professional billing web application for electrical parts resellers.
+A full-stack billing and inventory application for businesses across industries, including retailers and service providers.
 
 **Stack:** React + MUI · Node.js/Express · MongoDB Atlas · Amazon S3 · JWT Auth · Puppeteer PDF
 

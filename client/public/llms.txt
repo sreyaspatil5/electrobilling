@@ -1,0 +1,32 @@
+# ElectroBill
+
+> Free GST billing and inventory software for businesses across industries.
+
+ElectroBill helps businesses create GST invoices, manage customer records and product or service catalogs, track stock and payment status, and review sales reports. Invoices can be downloaded as PDFs or emailed to customers.
+
+## Product
+
+- Product name: ElectroBill
+- Product type: Web-based business billing and inventory application
+- Intended users: Businesses, retailers and service providers across industries
+- Price: Free to use; no subscription fee
+- Account access: New administrator accounts require approval
+- Publisher: VardhamanOps
+- Official product URL: https://billing.vops.digital/
+
+## Features
+
+- GST invoices with CGST and SGST or IGST
+- Custom product and service categories, prices, tax rates, units and stock quantities
+- Customer records
+- Invoice PDF generation, download and email
+- Paid, unpaid and partial payment tracking
+- Daily, weekly, monthly and annual sales reporting
+
+## Links
+
+- Product page: https://billing.vops.digital/
+- Sign in and account application: https://billing.vops.digital/login
+- Sitemap: https://billing.vops.digital/sitemap.xml
+- Product publisher: https://vops.digital/
+- Support: mailto:hello@vops.digital

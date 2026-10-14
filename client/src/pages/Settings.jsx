@@ -163,7 +163,7 @@ const Settings = () => {
                       <Typography variant="body2" fontWeight={600} mb={1}>Business Logo</Typography>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         {logoUrl ? (
-                          <Box component="img" src={logoUrl} alt="Logo"
+                          <Box component="img" src={logoUrl} alt="Uploaded business logo"
                             sx={{ height: 56, maxWidth: 120, objectFit: 'contain', border: '1px solid #e0e0e0', borderRadius: 2, p: 0.5 }} />
                         ) : (
                           <Avatar sx={{ width: 56, height: 56, bgcolor: 'primary.main', fontSize: '1.4rem' }}>L</Avatar>
@@ -185,7 +185,7 @@ const Settings = () => {
                       <Typography variant="body2" fontWeight={600} mb={1}>Signature</Typography>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         {signatureUrl ? (
-                          <Box component="img" src={signatureUrl} alt="Signature"
+                          <Box component="img" src={signatureUrl} alt="Authorized signatory signature"
                             sx={{ height: 48, maxWidth: 120, objectFit: 'contain', border: '1px solid #e0e0e0', borderRadius: 2, p: 0.5 }} />
                         ) : (
                           <Avatar sx={{ width: 48, height: 48, bgcolor: '#546e7a', fontSize: '1rem' }}>S</Avatar>

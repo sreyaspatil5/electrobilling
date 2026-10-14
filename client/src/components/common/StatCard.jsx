@@ -1,33 +1,30 @@
 import React from 'react';
 import { Card, CardContent, Box, Typography, Avatar } from '@mui/material';
-import { TrendingUp } from '@mui/icons-material';
 
-const StatCard = ({ title, value, subtitle, icon, color = '#1565c0', trend }) => (
+const StatCard = ({ title, value, subtitle, icon, color = '#284f43' }) => (
   <Card
     sx={{
       height: '100%',
-      background: `linear-gradient(135deg, ${color}12 0%, ${color}06 100%)`,
-      border: `1px solid ${color}22`,
-      transition: 'transform 0.2s, box-shadow 0.2s',
-      '&:hover': { transform: 'translateY(-2px)', boxShadow: `0 8px 24px ${color}22` },
+      transition: 'border-color 0.2s, box-shadow 0.2s',
+      '&:hover': { borderColor: `${color}70`, boxShadow: '0 5px 18px rgba(34,49,43,0.09)' },
     }}
   >
-    <CardContent sx={{ p: 2.5 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+    <CardContent sx={{ p: 2.25 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
         <Box>
-          <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.7rem' }}>
+          <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
             {title}
           </Typography>
-          <Typography variant="h5" sx={{ fontWeight: 800, color: color, mt: 0.5, lineHeight: 1 }}>
+          <Typography variant="h5" sx={{ fontWeight: 700, color: 'text.primary', mt: 0.75, lineHeight: 1.15, overflowWrap: 'anywhere' }}>
             {value}
           </Typography>
         </Box>
-        <Avatar sx={{ width: 44, height: 44, background: `${color}18`, color }}>
+        <Avatar sx={{ width: 42, height: 42, borderRadius: 1, background: `${color}18`, color, flexShrink: 0 }}>
           {icon}
         </Avatar>
       </Box>
       {subtitle && (
-        <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.78rem' }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {subtitle}
         </Typography>
       )}

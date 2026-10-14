@@ -244,12 +244,12 @@ const CreateBill = () => {
           <Grid item xs={12}>
             <Paper
               sx={{
-                p: 2, background: 'linear-gradient(135deg, #0d47a1 0%, #1565c0 100%)',
+                p: 2, background: '#284f43',
                 color: '#fff', borderRadius: 2, display: 'flex', gap: 3, flexWrap: 'wrap',
               }}
             >
               {business.logoUrl && (
-                <Box component="img" src={business.logoUrl} alt="logo"
+                <Box component="img" src={business.logoUrl} alt={`${business.businessName || 'Business'} logo`}
                   sx={{ height: 48, objectFit: 'contain', borderRadius: 1 }} />
               )}
               <Box>
@@ -365,12 +365,12 @@ const CreateBill = () => {
                     sx={{ mt: 0.5, display: 'flex' }}
                   >
                     <ToggleButton value="unpaid"
-                      sx={{ flex: 1, '&.Mui-selected': { background: '#fff3e0', color: '#e65100', borderColor: '#e65100' } }}
+                      sx={{ flex: 1, '&.Mui-selected': { background: '#f8efe2', color: '#8f611e', borderColor: '#b58b47' } }}
                     >
                       Unpaid
                     </ToggleButton>
                     <ToggleButton value="partial"
-                      sx={{ flex: 1, '&.Mui-selected': { background: '#e3f2fd', color: '#1565c0', borderColor: '#1565c0' } }}
+                      sx={{ flex: 1, '&.Mui-selected': { background: '#edf3ed', color: '#284f43', borderColor: '#79917e' } }}
                     >
                       Partial
                     </ToggleButton>
@@ -538,7 +538,7 @@ const CreateBill = () => {
                 <Box
                   sx={{
                     display: 'flex', justifyContent: 'space-between',
-                    background: 'linear-gradient(135deg, #0d47a1, #1565c0)',
+                    background: '#284f43',
                     borderRadius: 2, px: 2, py: 1.5,
                   }}
                 >

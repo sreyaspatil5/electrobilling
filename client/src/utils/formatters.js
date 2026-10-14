@@ -46,6 +46,5 @@ export const calcInvoiceTotals = (items = [], discountPercent = 0, taxType = 'CG
   };
 };
 
-export const PRODUCT_CATEGORIES = ['wire', 'switch', 'bulb', 'socket', 'MCB', 'cable', 'conduit', 'fan', 'panel', 'other'];
-export const PRODUCT_UNITS = ['pcs', 'meters', 'kg', 'box', 'roll', 'set', 'pair'];
+export const PRODUCT_CATEGORIES = ['Food & Beverage', 'Apparel', 'Electronics', 'Home & Kitchen', 'Office Supplies', 'Services', 'Retail', 'Other'];
 export const GST_RATES = [0, 5, 12, 18, 28];

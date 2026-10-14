@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      enum: ['wire', 'switch', 'bulb', 'socket', 'MCB', 'cable', 'conduit', 'fan', 'panel', 'other'],
+      maxlength: 60,
     },
     description: { type: String, trim: true },
     price: { type: Number, required: true, min: 0 },
@@ -16,8 +16,9 @@ const productSchema = new mongoose.Schema(
     unit: {
       type: String,
       required: true,
-      enum: ['pcs', 'meters', 'kg', 'box', 'roll', 'set', 'pair'],
-      default: 'pcs',
+      trim: true,
+      maxlength: 30,
+      default: 'item',
     },
     taxRate: { type: Number, default: 18 }, // default GST %
     hsn: { type: String, trim: true }, // HSN code for GST

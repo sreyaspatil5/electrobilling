@@ -14,23 +14,23 @@ import api from '../services/api';
 import PageHeader from '../components/common/PageHeader';
 import ConfirmDialog from '../components/common/ConfirmDialog';
 import LoadingSpinner from '../components/common/LoadingSpinner';
-import { formatCurrency, PRODUCT_CATEGORIES, PRODUCT_UNITS, GST_RATES } from '../utils/formatters';
+import { formatCurrency, PRODUCT_CATEGORIES, GST_RATES } from '../utils/formatters';
 
 const schema = yup.object({
   name: yup.string().required('Product name required'),
-  category: yup.string().required('Category required'),
+  category: yup.string().trim().max(60, 'Category must be 60 characters or fewer').required('Category required'),
   price: yup.number().typeError('Enter a valid price').min(0).required('Price required'),
   stock: yup.number().typeError('Enter valid stock').min(0).required('Stock required'),
-  unit: yup.string().required('Unit required'),
+  unit: yup.string().trim().max(30, 'Unit must be 30 characters or fewer').required('Unit required'),
   taxRate: yup.number().min(0).max(100).required(),
   hsn: yup.string().optional(),
   description: yup.string().optional(),
 });
 
 const CATEGORY_COLORS = {
-  wire: '#c62828', switch: '#1565c0', bulb: '#e65100', socket: '#2e7d32',
-  MCB: '#4527a0', cable: '#00695c', conduit: '#4e342e', fan: '#1565c0',
-  panel: '#6a1b9a', other: '#546e7a',
+  wire: '#b85f52', switch: '#54798a', bulb: '#b5783d', socket: '#3d8057',
+  MCB: '#75694f', cable: '#547c6b', conduit: '#8a725d', fan: '#4c7561',
+  panel: '#796653', other: '#66766d',
 };
 
 const Products = () => {
@@ -46,7 +46,7 @@ const Products = () => {
 
   const { register, handleSubmit, reset, control, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: { taxRate: 18, unit: 'pcs', category: 'wire' },
+    defaultValues: { taxRate: 18, unit: 'item', category: 'General' },
   });
 
   const fetchProducts = useCallback(async () => {
@@ -67,7 +67,7 @@ const Products = () => {
     return () => clearTimeout(timer);
   }, [fetchProducts]);
 
-  const openAdd = () => { setEditing(null); reset({ taxRate: 18, unit: 'pcs', category: 'wire', stock: 0 }); setDialogOpen(true); };
+  const openAdd = () => { setEditing(null); reset({ taxRate: 18, unit: 'item', category: 'General', stock: 0 }); setDialogOpen(true); };
   const openEdit = (p) => { setEditing(p); reset(p); setDialogOpen(true); };
   const closeDialog = () => { setDialogOpen(false); setEditing(null); };
 
@@ -102,6 +102,11 @@ const Products = () => {
   };
 
   const stockColor = (stock) => stock === 0 ? 'error' : stock < 10 ? 'warning' : 'success';
+  const categories = [...new Set([
+    ...PRODUCT_CATEGORIES,
+    ...products.map((product) => product.category),
+    ...(catFilter !== 'all' ? [catFilter] : []),
+  ].filter(Boolean))].sort((first, second) => first.localeCompare(second));
 
   return (
     <Box>
@@ -126,8 +131,8 @@ const Products = () => {
               <InputLabel>Category</InputLabel>
               <Select value={catFilter} label="Category" onChange={(e) => setCatFilter(e.target.value)}>
                 <MenuItem value="all">All Categories</MenuItem>
-                {PRODUCT_CATEGORIES.map((c) => (
-                  <MenuItem key={c} value={c} sx={{ textTransform: 'capitalize' }}>{c}</MenuItem>
+                {categories.map((category) => (
+                  <MenuItem key={category} value={category}>{category}</MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -213,24 +218,24 @@ const Products = () => {
           <Grid container spacing={2} sx={{ mt: 0.5 }}>
             <Grid item xs={12}><TextField {...register('name')} label="Product Name *" fullWidth error={!!errors.name} helperText={errors.name?.message} /></Grid>
             <Grid item xs={6}>
-              <Controller name="category" control={control} render={({ field }) => (
-                <FormControl fullWidth size="small" error={!!errors.category}>
-                  <InputLabel>Category *</InputLabel>
-                  <Select {...field} label="Category *">
-                    {PRODUCT_CATEGORIES.map((c) => <MenuItem key={c} value={c} sx={{ textTransform: 'capitalize' }}>{c}</MenuItem>)}
-                  </Select>
-                </FormControl>
-              )} />
+              <TextField
+                {...register('category')}
+                label="Category *"
+                placeholder="e.g. Groceries, Apparel, Services"
+                fullWidth
+                error={!!errors.category}
+                helperText={errors.category?.message || 'Use any category that fits your business.'}
+              />
             </Grid>
             <Grid item xs={6}>
-              <Controller name="unit" control={control} render={({ field }) => (
-                <FormControl fullWidth size="small">
-                  <InputLabel>Unit *</InputLabel>
-                  <Select {...field} label="Unit *">
-                    {PRODUCT_UNITS.map((u) => <MenuItem key={u} value={u}>{u}</MenuItem>)}
-                  </Select>
-                </FormControl>
-              )} />
+              <TextField
+                {...register('unit')}
+                label="Unit *"
+                placeholder="e.g. item, pack, kg, hour"
+                fullWidth
+                error={!!errors.unit}
+                helperText={errors.unit?.message}
+              />
             </Grid>
             <Grid item xs={4}><TextField {...register('price')} label="Price (₹) *" type="number" fullWidth error={!!errors.price} helperText={errors.price?.message} /></Grid>
             <Grid item xs={4}><TextField {...register('stock')} label="Stock *" type="number" fullWidth error={!!errors.stock} helperText={errors.stock?.message} /></Grid>

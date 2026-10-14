@@ -13,9 +13,10 @@ import api from '../services/api';
 import { formatCurrency } from '../utils/formatters';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import StatCard from '../components/common/StatCard';
+import toast from 'react-hot-toast';
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const COLORS = ['#1565c0','#2e7d32','#e65100','#6a1b9a','#00838f','#c62828'];
+const COLORS = ['#284f43', '#e56b42', '#79917e', '#b58b47', '#54798a', '#8b635a'];
 
 const Reports = () => {
   const [data, setData] = useState(null);
@@ -28,7 +29,7 @@ const Reports = () => {
       try {
         const { data: res } = await api.get('/invoices/reports', { params: { year } });
         setData(res.data);
-      } catch (e) { console.error(e); }
+      } catch (error) { toast.error(error.displayMessage || 'Could not load sales reports'); }
       finally { setLoading(false); }
     };
     load();
@@ -62,15 +63,15 @@ const Reports = () => {
           <Grid item xs={12} sm={4}>
             <StatCard title={`Total Revenue (${year})`} value={formatCurrency(totalRevenue)}
               subtitle={`${monthlySalesData.reduce((s,m)=>s+m.count,0)} invoices`}
-              icon={<TrendingUp />} color="#1565c0" />
+              icon={<TrendingUp />} color="#284f43" />
           </Grid>
           <Grid item xs={12} sm={4}>
             <StatCard title="Best Month" value={bestMonth.month}
-              subtitle={formatCurrency(bestMonth.total)} icon={<EmojiEvents />} color="#e65100" />
+              subtitle={formatCurrency(bestMonth.total)} icon={<EmojiEvents />} color="#e56b42" />
           </Grid>
           <Grid item xs={12} sm={4}>
             <StatCard title="Avg Monthly" value={formatCurrency(totalRevenue / 12)}
-              subtitle="Per month average" icon={<TrendingUp />} color="#2e7d32" />
+              subtitle="Per month average" icon={<TrendingUp />} color="#79917e" />
           </Grid>
 
           <Grid item xs={12}>
@@ -83,7 +84,7 @@ const Reports = () => {
                     <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                     <YAxis tickFormatter={(v) => `₹${v>=1000?(v/1000).toFixed(0)+'k':v}`} tick={{ fontSize: 12 }} />
                     <Tooltip formatter={(v) => [formatCurrency(v), 'Revenue']} contentStyle={{ borderRadius: 8 }} />
-                    <Bar dataKey="total" fill="#1565c0" radius={[6,6,0,0]} />
+                    <Bar dataKey="total" fill="#284f43" radius={[4,4,0,0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -100,8 +101,8 @@ const Reports = () => {
                     <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                     <YAxis tick={{ fontSize: 12 }} />
                     <Tooltip contentStyle={{ borderRadius: 8 }} />
-                    <Line type="monotone" dataKey="count" stroke="#e65100" strokeWidth={2.5}
-                      dot={{ r: 4, fill: '#e65100' }} name="Invoices" />
+                    <Line type="monotone" dataKey="count" stroke="#e56b42" strokeWidth={2.5}
+                      dot={{ r: 4, fill: '#e56b42' }} name="Invoices" />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>

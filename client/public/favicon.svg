@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-labelledby="title">
+  <title id="title">ElectroBill</title>
+  <rect width="48" height="48" rx="10" fill="#284f43" />
+  <path d="M27 6 13 26h10l-3 16 15-23H25l2-13Z" fill="#fff" />
+</svg>

@@ -1,2 +1,14 @@
 /api/*  http://ec2-13-233-51-235.ap-south-1.compute.amazonaws.com:5000/api/:splat  200!
-/*      /index.html   200
+/bill/new  /invoices/new  301!
+/  /index.html  200
+/login  /index.html  200
+/dashboard  /index.html  200
+/invoices  /index.html  200
+/invoices/new  /index.html  200
+/customers  /index.html  200
+/products  /index.html  200
+/reports  /index.html  200
+/settings  /index.html  200
+/admins  /index.html  200
+/pending-users  /index.html  200
+/*  /404.html  404

@@ -14,8 +14,8 @@ export const SIDEBAR_WIDTH = 240;
 export const SIDEBAR_COLLAPSED = 68;
 
 const navItems = [
-  { label: 'Dashboard', icon: <Dashboard />, path: '/' },
-  { label: 'Create Bill', icon: <AddCircle />, path: '/bill/new' },
+  { label: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
+  { label: 'Create Bill', icon: <AddCircle />, path: '/invoices/new' },
   { label: 'Invoices', icon: <Receipt />, path: '/invoices' },
   { label: 'Customers', icon: <People />, path: '/customers' },
   { label: 'Products', icon: <Inventory2 />, path: '/products' },
@@ -54,7 +54,7 @@ const Sidebar = ({ mobileOpen, onMobileClose }) => {
       >
         <Box
           sx={{
-            width: 38, height: 38, borderRadius: 2,
+            width: 38, height: 38, borderRadius: 1,
             background: 'rgba(255,255,255,0.18)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             flexShrink: 0,
@@ -100,6 +100,7 @@ const Sidebar = ({ mobileOpen, onMobileClose }) => {
         {!isMobile && (
           <IconButton
             size="small"
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             onClick={() => setCollapsed((c) => !c)}
             sx={{ ml: 'auto', color: 'rgba(255,255,255,0.7)', '&:hover': { color: '#fff' } }}
           >
@@ -111,14 +112,14 @@ const Sidebar = ({ mobileOpen, onMobileClose }) => {
       {/* Nav Items */}
       <List sx={{ flex: 1, pt: 1.5, px: 1 }}>
         {dynamicNavItems.map(({ label, icon, path }) => {
-          const active = path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
+          const active = location.pathname === path || (path !== '/invoices' && location.pathname.startsWith(`${path}/`));
           return (
             <Tooltip key={path} title={collapsed && !isMobile ? label : ''} placement="right">
               <ListItem disablePadding sx={{ mb: 0.5 }}>
                 <ListItemButton
                   onClick={() => handleNav(path)}
                   sx={{
-                    borderRadius: 2,
+                    borderRadius: 1,
                     minHeight: 46,
                     px: collapsed && !isMobile ? 1.5 : 2,
                     justifyContent: collapsed && !isMobile ? 'center' : 'flex-start',

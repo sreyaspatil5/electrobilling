@@ -7,14 +7,16 @@ const validate = require('../middleware/validate');
 
 const createRules = [
   body('name').trim().notEmpty().withMessage('Product name is required'),
-  body('category').notEmpty().withMessage('Category is required'),
+  body('category').trim().isLength({ min: 1, max: 60 }).withMessage('Category must be between 1 and 60 characters'),
   body('price').isFloat({ min: 0 }).withMessage('Price must be a positive number'),
   body('stock').isInt({ min: 0 }).withMessage('Stock must be a non-negative integer'),
-  body('unit').notEmpty().withMessage('Unit is required'),
+  body('unit').trim().isLength({ min: 1, max: 30 }).withMessage('Unit must be between 1 and 30 characters'),
 ];
 
 const updateRules = [
   param('id').isMongoId().withMessage('Invalid product ID'),
+  body('category').optional().trim().isLength({ min: 1, max: 60 }).withMessage('Category must be between 1 and 60 characters'),
+  body('unit').optional().trim().isLength({ min: 1, max: 30 }).withMessage('Unit must be between 1 and 30 characters'),
   body('price').optional().isFloat({ min: 0 }).withMessage('Price must be a positive number'),
   body('stock').optional().isInt({ min: 0 }).withMessage('Stock must be non-negative'),
 ];

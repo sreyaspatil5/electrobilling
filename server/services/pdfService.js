@@ -1,5 +1,21 @@
 const puppeteer = require('puppeteer');
+const { PDFDocument } = require('pdf-lib');
 const logger = require('../config/logger');
+
+const optimizePdfBuffer = async (buffer) => {
+  try {
+    const document = await PDFDocument.load(buffer);
+    const optimized = Buffer.from(await document.save({ useObjectStreams: true, objectsPerTick: 50 }));
+    if (optimized.length < buffer.length) {
+      logger.info(`Invoice PDF optimized: ${buffer.length} -> ${optimized.length} bytes`);
+      return optimized;
+    }
+  } catch (error) {
+    logger.warn(`Invoice PDF optimization skipped: ${error.message}`);
+  }
+
+  return buffer;
+};
 
 /**
  * Generates a professional invoice PDF using Puppeteer.
@@ -28,8 +44,9 @@ const generateInvoicePDF = async (invoiceData) => {
       margin: { top: '0', right: '0', bottom: '0', left: '0' },
     });
 
-    logger.info(`PDF generated for invoice: ${invoice.invoiceNumber}`);
-    return Buffer.from(pdfBuffer);
+    const optimizedBuffer = await optimizePdfBuffer(Buffer.from(pdfBuffer));
+    logger.info(`PDF generated for invoice: ${invoice.invoiceNumber} (${optimizedBuffer.length} bytes)`);
+    return optimizedBuffer;
   } catch (err) {
     logger.error('PDF generation failed:', err);
     throw new Error(`PDF generation failed: ${err.message}`);
@@ -153,7 +170,7 @@ const buildInvoiceHTML = (business, invoice) => {
   <div class="header">
     <div class="logo-block">
       ${business.logoUrl
-      ? `<img src="${business.logoUrl}" alt="${business.businessName} Logo"/>`
+      ? `<img src="${business.logoUrl}" alt="Business logo"/>`
       : `<div class="logo-placeholder">${(business.businessName || 'B').charAt(0)}</div>`}
       <div style="margin-top:10px">
         <strong style="font-size:16px;color:#1a1a2e">${business.businessName || ''}</strong><br/>
@@ -247,7 +264,7 @@ const buildInvoiceHTML = (business, invoice) => {
   ${business.signatureUrl ? `
   <div class="signature-section">
     <div class="signature-block">
-      <img src="${business.signatureUrl}" alt="Signature"/>
+      <img src="${business.signatureUrl}" alt="Authorized signatory signature"/>
       <div class="signature-line">Authorized Signatory<br/>${business.businessName || ''}</div>
     </div>
   </div>` : ''}
@@ -263,4 +280,4 @@ const buildInvoiceHTML = (business, invoice) => {
 </html>`;
 };
 
-module.exports = { generateInvoicePDF };
+module.exports = { generateInvoicePDF, optimizePdfBuffer };

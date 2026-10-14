@@ -26,7 +26,7 @@ const schema = yup.object({
   gstNumber: yup.string().optional(),
 });
 
-const AVATAR_COLORS = ['#1565c0', '#2e7d32', '#e65100', '#6a1b9a', '#00838f', '#c62828'];
+const AVATAR_COLORS = ['#284f43', '#54798a', '#e56b42', '#79917e', '#b58b47', '#8b635a'];
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);

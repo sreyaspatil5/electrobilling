@@ -21,10 +21,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               duration: 4000,
               style: {
                 borderRadius: '10px',
-                fontFamily: 'Inter, sans-serif',
+                fontFamily: 'DM Sans, sans-serif',
                 fontSize: '14px',
               },
-              success: { iconTheme: { primary: '#1565c0', secondary: '#fff' } },
+              success: { iconTheme: { primary: '#284f43', secondary: '#fff' } },
             }}
           />
         </BusinessProvider>
